@@ -1,1 +1,11 @@
 assets/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+node_modules/
+dist/
+.vscode/
+.idea/
+*.log
+coverage/
