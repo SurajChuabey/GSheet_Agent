@@ -8,4 +8,5 @@ dist/
 .vscode/
 .idea/
 *.log
+.venv/
 coverage/
