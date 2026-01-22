@@ -1,6 +1,7 @@
 import json
 from typing import Optional
 from server import mcp
+from utils.utils import utility
 from pygsheets import PyGsheetsException
 from pygsheets import Worksheet
 from constants.globals import Global
@@ -11,8 +12,7 @@ from constants.constants import Constants
 def sort_range(sheet_name:str, cell_range:str, sort_columns:str, ascending:Optional[bool]=True)->str:
     """Sorts a range by columns. sort_columns = '1,3' (1-based column indices)."""
     try:
-        if sheet_name is None:sh = Global.gc.sheet1
-        else:sh = Global.gc.worksheet_by_title(sheet_name)
+        sh:Worksheet = utility._get_worksheet(sheet_name=sheet_name)
         cols=[int(c.strip()) for c in sort_columns.split(",")]
         sh.sort_range(cell_range, cols, ascending=ascending)
         return f"Sorted range {cell_range} by columns {cols}"
@@ -24,8 +24,7 @@ def sort_range(sheet_name:str, cell_range:str, sort_columns:str, ascending:Optio
 def filter_data(sheet_name:str, cell_range:str, filter_criteria:str)->str:
     """Applies filters using JSON string. Example: {'column':1,'condition':'>','value':100}"""
     try:
-        if sheet_name is None:sh = Global.gc.sheet1
-        else:sh = Global.gc.worksheet_by_title(sheet_name)
+        sh:Worksheet = utility._get_worksheet(sheet_name=sheet_name)
         criteria=json.loads(filter_criteria)
         sh.set_basic_filter(cell_range)
         return f"Filter applied on range {cell_range} (manual conditions via UI)."
@@ -37,8 +36,7 @@ def filter_data(sheet_name:str, cell_range:str, filter_criteria:str)->str:
 def remove_duplicates(sheet_name:str, cell_range:str, columns:str)->str:
     """Removes duplicates based on columns. columns='1,2' (1-based)."""
     try:
-        if sheet_name is None:sh = Global.gc.sheet1
-        else:sh = Global.gc.worksheet_by_title(sheet_name)
+        sh:Worksheet = utility._get_worksheet(sheet_name=sheet_name)
         cols=[int(c.strip()) for c in columns.split(",")]
         sh.remove_duplicates(cell_range, cols)
         return f"Duplicates removed from {cell_range}"
@@ -49,16 +47,14 @@ def remove_duplicates(sheet_name:str, cell_range:str, columns:str)->str:
 @mcp.tool(name=Constants.FIND_VALUE_NAME, description=Constants.FIND_VALUE_DESC)
 def find_value(sheet_name:str, search_value:str, cell_range:Optional[str]=None):
     """Finds all occurrences of a value in a range or entire sheet."""
-    if sheet_name is None:sh = Global.gc.sheet1
-    else:sh = Global.gc.worksheet_by_title(sheet_name)
+    sh:Worksheet = utility._get_worksheet(sheet_name=sheet_name)
     return sh.find(search_value, matchEntireCell=False, searchByRegex=False, in_range=cell_range)
 
 
 @mcp.tool(name=Constants.GET_UNIQUE_VALUES_NAME, description=Constants.GET_UNIQUE_VALUES_DESC)
 def get_unique_values(sheet_name:str, column:int):
     """Returns unique values from a column (1-based)."""
-    if sheet_name is None:sh = Global.gc.sheet1
-    else:sh = Global.gc.worksheet_by_title(sheet_name)
+    sh:Worksheet = utility._get_worksheet(sheet_name=sheet_name)
     values=sh.get_col(column)
     return list(set(values))
 

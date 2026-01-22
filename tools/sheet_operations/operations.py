@@ -3,6 +3,7 @@ from server import mcp
 from pygsheets import Worksheet
 from constants.globals import Global
 from constants.constants import Constants
+from utils.utils import utility
 
 
 @mcp.tool(name=Constants.LIST_SHEETS_NAME, description=Constants.LIST_SHEETS_DESC)
@@ -16,7 +17,10 @@ def list_sheets():
 def read_sheet(sheet_name: Optional[str] = None):
     """Returns the entire sheet"""
     sh:Worksheet= Global.gc.worksheet_by_title(sheet_name) or Global.gc.sheet1
-    return sh.get_all_values()
+    df = sh.get_as_df()
+    res = df
+    del df
+    return res
     
 
 @mcp.tool(name=Constants.CREATE_SHEET_NAME, description=Constants.CREATE_SHEET_DESC)

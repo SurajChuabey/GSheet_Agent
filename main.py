@@ -13,11 +13,18 @@ import tools.data_analysis.analysis_operations
 import tools.visualizations.visualizations
 import services.googleSheetServices
 
-# from tools.sheet_operations.operations import read_sheet
+from tools.data_operations.operations import append_data_batch_in_rows
 
 if __name__=="__main__":
     # establish connection with google
     Services.connect()
-    # print(read_sheet(sheet_name="Sheet1"))
-    transport = os.environ.get(Constants.TRANSPORT,ConfigManager.config(Constants.MCP_SERVER,Constants.TRANSPORT))
-    mcp.run(transport=transport)
+    # Mocking the CSV input from a user
+    test_values = """"John Doe","john@example.com",12345
+    "Jane Smith","jane@example.com",67890"""
+
+    # Running the function
+    result = append_data_batch_in_rows(sheet_name="Sheet1", row_index=1, values=test_values)
+
+    print(result)
+    # transport = os.environ.get(Constants.TRANSPORT,ConfigManager.config(Constants.MCP_SERVER,Constants.TRANSPORT))
+    # mcp.run(transport=transport)

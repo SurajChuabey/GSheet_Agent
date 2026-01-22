@@ -5,14 +5,15 @@ class utility:
 
     @staticmethod
     def _get_worksheet(sheet_name: str) -> Worksheet:
-        """
-        Internal helper to fetch a worksheet by name. Defaults to sheet1 on failure.
-        """
+        """Fetch worksheet by name. Defaults to sheet1 if empty or not found."""
         try:
-            return Global.get_sheet(sheet_name)
+            if not sheet_name:
+                return Global.gc.sheet1
+            return Global.gc.worksheet_by_title(sheet_name)
         except Exception:
-            return Global.gc.worksheet_by_title(sheet_name) or Global.gc.sheet1
+            return Global.gc.sheet1
 
+    
     @staticmethod
     def _list_to_a1(s_row: int, s_col: int, e_row: int, e_col: int) -> str:
         """

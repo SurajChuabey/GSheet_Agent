@@ -69,9 +69,9 @@ def set_number_format(sheet_name:str, cell_range:str, format_string:str)->str:
 
 
 @mcp.tool(name=Constants.MERGE_CELLS_NAME, description=Constants.MERGE_CELLS_DESC)
-def merge_cells(sheet_name:str, cell_range:str)->str:
+def merge_cells(sheet_name:str, start_range:str,end_range:str)->str:
     """Merges all cells in the given range into a single cell."""
-    utility._get_worksheet(sheet_name).merge_cells(name=cell_range, merge_type="MERGE_ALL"); return f"Merged cells in {cell_range}"
+    utility._get_worksheet(sheet_name).merge_cells(start=start_range,end=end_range ,merge_type="MERGE_ALL"); return f"Merged cells in {start_range}"
 
 
 @mcp.tool(name=Constants.SET_COLUMN_WIDTH_NAME, description=Constants.SET_COLUMN_WIDTH_DESC)
