@@ -11,6 +11,7 @@ dependencies = [
     "mcp[cli]>=1.25.0",
     "numpy>=2.4.1",
     "pandas>=2.3.3",
+    "pygsheet>=0.1.19b25",
     "pygsheets>=2.0.6",
     "seaborn>=0.13.2",
 ]
