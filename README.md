@@ -1,4 +1,4 @@
-# Google Sheets MCP Agent 🚀
+# Google Sheets MCP SERVER 🚀
 
 A powerful, comprehensive Model Context Protocol (MCP) server that enables AI agents to interact directly with Google Sheets. Perform everything from simple cell updates to complex data analysis and visualization using natural language.
 
