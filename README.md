@@ -1,209 +1,135 @@
-# How to Use Your Google Sheets MCP Server in Cursor
+# Google Sheets MCP Agent 🚀
 
-## ✅ Step 1: Verify Connection
-
-1. **Restart Cursor** (if you haven't already)
-   - Close Cursor completely
-   - Reopen it
-
-2. **Check MCP Tools**:
-   - Open Cursor Settings → **Developer** → **Edit Config**
-   - Select **MCP Tools**
-   - You should see **"sheets-cello"** listed
-
-3. **Verify Server is Running**:
-   ```bash
-   # Make sure your MCP server is running
-   python main.py
-   ```
-
-## 🚀 Step 2: Using MCP Tools in Cursor Chat
-
-Once connected, you can use natural language in Cursor's chat to interact with Google Sheets. The AI will automatically use the appropriate MCP tools.
-
-### Example Conversations:
-
-#### **Reading Data:**
-```
-"Read the data from cells A1 to C10 in my sheet"
-"Get the value from cell B5"
-"Show me all the data in Sheet1"
-```
-
-#### **Writing Data:**
-```
-"Set cell A1 to 'Hello World'"
-"Update row 3 with values: John, 25, Developer"
-"Add these rows starting at A10: Alice,30,Engineer;Bob,28,Designer"
-```
-
-#### **Sheet Management:**
-```
-"List all sheets in my spreadsheet"
-"Create a new sheet called 'Sales Data'"
-"Rename Sheet1 to 'January Data'"
-"Delete the sheet named 'Old Data'"
-```
-
-#### **Formatting:**
-```
-"Make cell A1 bold and red"
-"Set background color of range A1:C5 to yellow"
-"Center align the text in column B"
-"Merge cells A1 to C1"
-```
-
-#### **Data Analysis:**
-```
-"Sort the data in range A1:C100 by column B in descending order"
-"Find all rows containing 'John' in column A"
-"Remove duplicate rows from range A1:C50"
-"Get unique values from column C"
-```
-
-#### **Charts:**
-```
-"Create a bar chart for data in range A1:B10"
-"Create a pie chart showing sales data from A1:B5"
-```
-
-## 📋 Available MCP Tools
-
-Your server provides **47+ tools** organized into categories:
-
-### 📊 **Data Operations** (9 tools)
-- `read_range` - Read data from a range (e.g., A1:C10)
-- `read_batch_ranges` - Read multiple ranges at once
-- `read_sheet` - Read entire sheet
-- `get_cell_value` - Get single cell value
-- `set_cell_value` - Set single cell value
-- `update_row_by_index` - Update entire row
-- `update_or_insert_column` - Update column
-- `append_data_batch_in_rows` - Add multiple rows
-- `clear_range` - Clear cell range
-
-### 📑 **Sheet Operations** (4 tools)
-- `list_sheets` - List all sheets
-- `create_sheet` - Create new sheet
-- `delete_sheet` - Delete sheet
-- `rename_sheet` - Rename sheet
-- `select_sheet` - Switch to different Google Sheet workbook
-
-### 🎨 **Formatting** (12 tools)
-- `set_text_style` - Bold, italic, font size
-- `set_text_color` - Text color (RGB)
-- `set_background_color` - Background color (RGB)
-- `set_alignment` - Horizontal/vertical alignment
-- `set_wrap` - Text wrapping
-- `set_borders` - Cell borders
-- `set_rotation` - Text rotation
-- `set_number_format` - Number/date/currency format
-- `merge_cells` - Merge cell range
-- `set_column_width` - Set column width
-- `set_row_height` - Set row height
-- `auto_fit_columns` - Auto-fit column width
-
-### 📐 **Row & Column Operations** (8 tools)
-- `insert_rows` - Insert rows
-- `delete_rows` - Delete rows
-- `insert_columns` - Insert columns
-- `delete_columns` - Delete columns
-- `hide_rows` - Hide rows
-- `show_rows` - Show hidden rows
-- `hide_columns` - Hide columns
-- `show_columns` - Show hidden columns
-
-### 🔢 **Formulas** (3 tools)
-- `set_formula_in_cell` - Set formula in cell
-- `get_formula_from_cell` - Get formula from cell
-- `evaluate_formula` - Evaluate formula value
-
-### 📈 **Data Analysis** (6 tools)
-- `sort_range` - Sort data by columns
-- `filter_data` - Apply filters
-- `remove_duplicates` - Remove duplicate rows
-- `find_value` - Search for values
-- `get_unique_values` - Get unique values
-- `create_gsheet_pivot` - Create pivot table
-
-### 📊 **Visualizations** (3 tools)
-- `create_chart` - Create charts (bar, line, pie, etc.)
-- `update_chart` - Update existing chart
-- `delete_chart` - Delete chart
-
-### ℹ️ **Metadata** (1 tool)
-- `get_sheet_metadata` - Get full sheet information
-
-## 💡 Tips for Best Results
-
-1. **Be Specific**: Mention sheet names, cell ranges, and exact values
-   - ✅ Good: "Read range A1:C10 from Sheet1"
-   - ❌ Vague: "Read some data"
-
-2. **Use Natural Language**: The AI understands conversational requests
-   - ✅ "Add a new row with my name, age, and city"
-   - ✅ "Make the header row bold and blue"
-   - ✅ "Create a chart showing sales by month"
-
-3. **First Read, Then Write**: For complex operations, the AI will first read the sheet to understand the structure
-
-4. **Sheet Selection**: If working with multiple Google Sheet workbooks, use `select_sheet` first:
-   - "Switch to the sheet named 'Sales Report'"
-   - "Select the 'book' spreadsheet"
-
-## 🔧 Troubleshooting
-
-### MCP Tools Not Appearing?
-1. Verify server is running: `python main.py`
-2. Check `.cursor/mcp.json` exists and has correct URL
-3. Restart Cursor completely
-4. Check server logs for errors
-
-### Connection Issues?
-1. Verify server is accessible at `http://localhost:9001/sse`
-2. Check firewall settings
-3. For remote servers, update URL in `mcp.json` to use IP address
-
-### Tools Not Working?
-1. Ensure Google Sheets API credentials are set up correctly
-2. Check that the service account has access to your sheets
-3. Verify the sheet name exists in your Google Drive
-
-## 🎯 Quick Start Examples
-
-### Example 1: Basic Data Entry
-```
-You: "Add a header row in Sheet1 with: Name, Age, City, Salary"
-AI: [Uses set_cell_value or append_data_batch_in_rows]
-
-You: "Add a row with: Alice, 30, New York, 75000"
-AI: [Uses append_data_batch_in_rows]
-```
-
-### Example 2: Data Analysis
-```
-You: "Read all data from Sheet1"
-AI: [Uses read_sheet]
-
-You: "Sort the data by the Salary column in descending order"
-AI: [Uses sort_range]
-```
-
-### Example 3: Formatting
-```
-You: "Make the first row bold with blue background"
-AI: [Uses set_text_style and set_background_color]
-
-You: "Center align all headers"
-AI: [Uses set_alignment]
-```
-
-### Example 4: Charts
-```
-You: "Create a bar chart for the data in A1:B10 showing sales by month"
-AI: [Uses create_chart with appropriate configuration]
-```
+A powerful, comprehensive Model Context Protocol (MCP) server that enables AI agents to interact directly with Google Sheets. Perform everything from simple cell updates to complex data analysis and visualization using natural language.
 
 ---
 
-**Happy Spreadsheet Automation! 🎉**
+## 📂 Project Structure
+
+The project is organized into modular service layers for easy maintenance and extensibility:
+
+- **`constants/`**: Centralized configuration and LLM-optimized tool descriptions.
+  - `constants.py`: Definitions for tool names, descriptions, and GSheet keys.
+- **`services/`**: Core logic for interacting with external APIs and services.
+- **`tools/`**: Implementation of various spreadsheet features:
+  - `data_analysis/`: Sorting, filtering, pivot tables, and unique value extraction.
+  - `data_operations/`: Reading ranges, batch updates, and row/column data entry.
+  - `formattings/`: Text styling, colors, alignment, borders, and number formats.
+  - `formulas/`: Formula insertion and evaluation.
+  - `rows_and_coloumns_operations/`: Structural changes (insert/delete/hide/show).
+  - `sheet_operations/`: Sheet management (create, delete, rename, list).
+  - `visualizations/`: Dynamic chart creation and updates.
+- **`utils/`**: Helper utilities for color normalization and worksheet retrieval.
+- **`main.py` & `server.py`**: MCP server entry points and initialization.
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Prerequisites
+
+- Google Cloud Project with Google Sheets and Drive APIs enabled.
+- Service account JSON credentials file placed in `assets/`.
+- Python 3.10+ installed.
+
+### 2. Verify Connection
+
+1. **Verify Server is Running**:
+   ```bash
+   python main.py
+   ```
+2. **Cursor Configuration**:
+   - Open Cursor Settings → **Developer** → **Edit Config**.
+   - Ensure the server is listed (default name: `sheets-cello`).
+3. **Credentials**:
+   - Ensure the `SERVICE_FILE_PATH` in `constants/constants.py` or as an environment variable points to your service account JSON.
+
+---
+
+## 🛠️ Exhaustive Tool Reference
+
+The agent provides **46 specialized tools** organized into the following categories. Each tool is optimized for LLM use with detailed descriptions and usage examples.
+
+### 🔌 **Connection & Scope** (1 tool)
+
+- `select_sheet`: Selects or activates a different Google Sheet workbook by name.
+
+### 📊 **Data Operations** (8 tools)
+
+- `read_range`: Retrieves values from a specific rectangular range (e.g., A1:C10).
+- `read_batch_ranges`: Retrieves values from multiple non-contiguous ranges in one call.
+- `read_sheet`: Fetches every single populated row and column from the worksheet.
+- `get_cell_value`: Retrieves the value of a single specific cell.
+- `set_cell_value`: Updates the value of a single specific cell.
+- `update_row_by_index`: Updates an entire row with new data based on the row number.
+- `update_or_insert_column`: Updates or inserts values into a specific column.
+- `append_data_batch_in_rows`: Appends multiple rows of data, automatically finding the end if needed.
+- `clear_range`: Deletes all content within a specified range of cells.
+
+### 📑 **Sheet Management** (4 tools)
+
+- `list_sheets`: Retrieves a list of all worksheet titles in the current spreadsheet.
+- `create_sheet`: Creates a new worksheet with optional row/column size.
+- `delete_sheet`: Deletes an existing worksheet by its name.
+- `rename_sheet`: Updates the title of an existing worksheet.
+
+### 🎨 **Formatting & Styling** (12 tools)
+
+- `set_text_style`: Sets bold, italic, and font size for a range.
+- `set_text_color`: Sets the foreground color of cells using RGB values.
+- `set_background_color`: Sets the background (fill) color of cells using RGB values.
+- `set_alignment`: Sets horizontal and/or vertical alignment of text.
+- `set_wrap`: Controls how text wraps (WRAP, CLIP, OVERFLOW).
+- `set_borders`: Applies borders (top, bottom, left, right) around a range.
+- `set_rotation`: Rotates the text inside cells by a given angle.
+- `set_number_format`: Sets number, date, currency, or percent format patterns.
+- `merge_cells`: Merges all cells in a range into a single cell.
+- `set_column_width`: Sets the width of a specific column in pixels.
+- `set_row_height`: Sets the height of a specific row in pixels.
+- `auto_fit_columns`: Automatically adjusts column widths based on content.
+
+### 📐 **Row & Column Operations** (8 tools)
+
+- `insert_rows`: Inserts new empty rows at a specific index.
+- `delete_rows`: Deletes a specified number of rows from an index.
+- `insert_columns`: Inserts new empty columns at a specific index.
+- `delete_columns`: Deletes a specified number of columns from an index.
+- `hide_rows`: Hides specific rows from view.
+- `show_rows`: Unhides previously hidden rows.
+- `hide_columns`: Hides specific columns from view.
+- `show_columns`: Unhides previously hidden columns.
+
+### 🔢 **Formulas** (3 tools)
+
+- `set_formula_in_cell`: Inserts a Google Sheets formula (e.g., `=SUM(A1:A10)`).
+- `get_formula_from_cell`: Retrieves the raw formula string from a cell.
+- `evaluate_formula`: Returns the computed numeric or text result of a formula.
+
+### 📈 **Data Analysis** (6 tools)
+
+- `sort_range`: Sorts a range by a column in ascending or descending order.
+- `filter_data`: Applies complex filtering criteria to a range.
+- `remove_duplicates`: Removes duplicate rows based on specific columns.
+- `find_value`: Searches for a specific value across a range or entire sheet.
+- `get_unique_values`: Returns all unique values from a specific column.
+- `create_gsheet_pivot`: Creates a pivot table summary on a target sheet.
+
+### 📊 **Visualizations** (3 tools)
+
+- `create_chart`: Creates line, bar, pie, or column charts.
+- `update_chart`: Updates an existing chart's title, type, or position.
+- `delete_chart`: Removes a chart from the worksheet by its title.
+
+---
+
+## 🔧 Troubleshooting
+
+- **MCP Tools Not Appearing?**
+  1. Ensure `python main.py` is running.
+  2. Restart Cursor completely to refresh tool discovery.
+- **Permission Denied?**
+  - Ensure you have shared your Google Sheet with the **Service Account Email** found in your JSON credentials file.
+
+---
+
+### **Total Active Tools: 46** 🛠️

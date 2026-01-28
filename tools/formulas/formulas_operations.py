@@ -8,7 +8,7 @@ from constants.constants import Constants
 
 @mcp.tool(name=Constants.SET_FORMULA_NAME, description=Constants.SET_FORMULA_DESC)
 def set_formula_in_cell(sheet_name:str, cell_addr:str, formula:str)->str:
-    """Sets a formula in a cell (e.g. '=SUM(A1:A10)')."""
+    """Inserts a Google Sheets formula into a specific cell."""
     sh:Worksheet = utility._get_worksheet(sheet_name=sheet_name)
     if not formula.startswith("="): formula="="+formula
     sh.update_value(addr=cell_addr, val=formula)
@@ -17,13 +17,13 @@ def set_formula_in_cell(sheet_name:str, cell_addr:str, formula:str)->str:
 
 @mcp.tool(name=Constants.GET_FORMULA_NAME, description=Constants.GET_FORMULA_DESC)
 def get_formula_from_cell(sheet_name:str, cell_addr:str):
-    """Returns the formula string from a cell."""
+    """Retrieves the formula string currently stored in a specific cell."""
     sh:Worksheet = utility._get_worksheet(sheet_name=sheet_name)
-    return sh.get_value(addr=cell_addr, value_render_option="FORMULA")
+    return sh.get_value(addr=cell_addr, value_render="FORMULA")
 
 
 @mcp.tool(name=Constants.EVALUATE_FORMULA_NAME, description=Constants.EVALUATE_FORMULA_DESC)
 def evaluate_formula(sheet_name:str, cell_addr:str):
-    """Returns the evaluated result of a formula cell."""
+    """Retrieves the calculated result of a formula from a specific cell."""
     sh:Worksheet = utility._get_worksheet(sheet_name=sheet_name)
-    return sh.get_value(addr=cell_addr, value_render_option="UNFORMATTED_VALUE")
+    return sh.get_value(addr=cell_addr, value_render="UNFORMATTED_VALUE")

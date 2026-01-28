@@ -3,13 +3,12 @@ from services.googleSheetServices import Services
 from server import mcp
 from utils.configReader import ConfigManager
 from constants.constants import Constants
+import tools.data_analysis.analysis_operations 
 import tools.data_operations.operations
-import tools.sheet_operations.operations
 import tools.formattings.formattings
-import tools.rows_and_coloumns_operations
 import tools.formulas.formulas_operations
-import tools.sheet_metadata.sheet_metadata_operations
-import tools.data_analysis.analysis_operations
+import tools.rows_and_coloumns_operations.rows_and_Cols_operations
+import tools.sheet_operations.operations
 import tools.visualizations.visualizations
 import services.googleSheetServices
 

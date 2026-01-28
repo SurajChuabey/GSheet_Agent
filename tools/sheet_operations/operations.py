@@ -8,14 +8,14 @@ from utils.utils import utility
 
 @mcp.tool(name=Constants.LIST_SHEETS_NAME, description=Constants.LIST_SHEETS_DESC)
 def list_sheets():
-    """Returns a list of all worksheet names in the spreadsheet."""
+    """Retrieves a list of all worksheet titles available in the current spreadsheet."""
     worksheets = Global.gc.worksheets()
     return [ws.title for ws in worksheets]
 
 
 @mcp.tool(name=Constants.READ_SHEET_NAME, description=Constants.READ_SHEET_DESC)
 def read_sheet(sheet_name: Optional[str] = None):
-    """Returns the entire sheet"""
+    """Fetches all populated rows and columns from the specified worksheet."""
     sh:Worksheet= Global.gc.worksheet_by_title(sheet_name) or Global.gc.sheet1
     df = sh.get_as_df()
     res = df
@@ -25,7 +25,7 @@ def read_sheet(sheet_name: Optional[str] = None):
 
 @mcp.tool(name=Constants.CREATE_SHEET_NAME, description=Constants.CREATE_SHEET_DESC)
 def create_sheet(sheet_name:str, row:Optional[int]=None, col:Optional[int]=None)->str:
-    """Creates a new worksheet with optional row and column size."""
+    """Creates a new worksheet within the current spreadsheet."""
     if row and col: Global.gc.add_worksheet(title=sheet_name, rows=row, cols=col)
     else: Global.gc.add_worksheet(title=sheet_name)
     return f"Worksheet '{sheet_name}' added successfully."
@@ -33,7 +33,7 @@ def create_sheet(sheet_name:str, row:Optional[int]=None, col:Optional[int]=None)
 
 @mcp.tool(name=Constants.DELETE_SHEET_NAME, description=Constants.DELETE_SHEET_DESC)
 def delete_sheet(sheet_name:str)->str:
-    """Deletes a worksheet by its name."""
+    """Permanently deletes a specified worksheet from the spreadsheet."""
     try:
         worksheet:Worksheet = Global.gc.worksheet_by_title(sheet_name)
         Global.gc.del_worksheet(worksheet)
@@ -44,7 +44,7 @@ def delete_sheet(sheet_name:str)->str:
 
 @mcp.tool(name=Constants.RENAME_SHEET_NAME, description=Constants.RENAME_SHEET_DESC)
 def rename_sheet(old_name:str, new_name:str)->str:
-    """Renames an existing worksheet."""
+    """Updates the title of an existing worksheet."""
     try:
         worksheet:Worksheet = Global.gc.worksheet_by_title(old_name)
         worksheet.title = new_name

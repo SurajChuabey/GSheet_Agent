@@ -35,3 +35,13 @@ class utility:
                 'green': color_tuple[1] / 255.0 if color_tuple[1] > 1 else color_tuple[1],
                 'blue': color_tuple[2] / 255.0 if color_tuple[2] > 1 else color_tuple[2]
             }
+
+    @staticmethod
+    def get_field_mask(fmt_dict, prefix="userEnteredFormat"):
+        fields = []
+        for k, v in fmt_dict.items():
+            if isinstance(v, dict):
+                fields.append(utility.get_field_mask(v, f"{prefix}.{k}"))
+            else:
+                fields.append(f"{prefix}.{k}")
+        return ",".join(fields)
