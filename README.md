@@ -32,6 +32,36 @@ The project is organized into modular service layers for easy maintenance and ex
 - Service account JSON credentials file placed in `assets/`.
 - Python 3.10+ installed.
 
+## Step 2: Create Google Cloud Project
+- Go to **Google Cloud Console**
+- Create a new project
+
+## Step 3: Enable APIs
+Enable:
+- Google Sheets API
+- Google Drive API
+
+## Step 4: Create Service Account
+- Go to **APIs & Services → Credentials**
+- Create a Service Account
+
+## Step 5: Create Service Account Key
+- Open the Service Account
+- Create a **JSON** key
+- Download the file (e.g. `credentials.json`)
+
+## Step 6: Share Google Sheet
+- Open the Google Sheet
+- Share it with the **service account email**
+- Give **Editor** access
+
+## Step 7: Authorize in Python
+```
+mount your credential to assets/ if you running through docker
+set SERVICE_FILE_PATH=path to your credential if running locally
+
+```
+
 ### 2. Verify Connection
 
 1. **Verify Server is Running**:
@@ -132,4 +162,13 @@ The agent provides **46 specialized tools** organized into the following categor
 
 ---
 
+#ENVIRONMENT VARIBALES
+
+```
+SERVICE_FILE_PATH= path to your credentials.json
+transport= (sse,stdio,http)
+mcp_host= ip to host mcp
+mcp_port= port to run mcp server
+
+```
 ### **Total Active Tools: 46** 🛠️

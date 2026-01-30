@@ -10,4 +10,5 @@ dist/
 *.log
 .venv/
 coverage/
-.cursor/
+.cursor/gsheet.tar
+gsheet.tar
