@@ -1,0 +1,38 @@
+# Python cache and bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Logs
+*.log
+
+# Git files
+.git
+.gitignore
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# IDE/editor configs
+.vscode/
+.idea/
+
+# Service account file (if local)
+service_account.json
+
+# Local environment files
+.env
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Other possibly large or sensitive files
+*.sqlite3
