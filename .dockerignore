@@ -32,6 +32,7 @@ service_account.json
 # Build artifacts
 build/
 dist/
+test/
 *.egg-info/
 
 # Other possibly large or sensitive files

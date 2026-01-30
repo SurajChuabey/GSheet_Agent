@@ -5,8 +5,6 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 # Set working directory
 WORKDIR /app
 
-RUN mkdir -p /app/secrets
-
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1 \
@@ -24,7 +22,7 @@ RUN if [ -f uv.lock ]; then uv sync --frozen --no-dev; \
 # Copy the rest of the application
 COPY . .
 
-ENV SERVICE_FILE_PATH=/app/secrets/service_account.json
+
 ENV TRANSPORT=http
 ENV MCP_HOST_DEFAULT=0.0.0.0
 ENV MCP_PORT_DEFAULT=9001
@@ -34,3 +32,5 @@ EXPOSE 9001
 
 # Run FastAPI using uv to execute the module
 CMD ["uv", "run", "main.py"]
+
+# docker run -p 9001:9001 -v $(pwd)/assets/:/app/assets gsheet:latestv1 
